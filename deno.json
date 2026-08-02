@@ -1,6 +1,6 @@
 {
   "name": "@cunarist/typescript-deno-lint",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "exports": {
     ".": "./src/mod.ts",
