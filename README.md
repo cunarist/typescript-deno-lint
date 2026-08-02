@@ -1,6 +1,6 @@
 # typescript-deno-lint
 
-Type-aware Deno lint rules, authored the way typescript-eslint rules are.
+Create type-aware Deno lint rules, just like `typescript-eslint`.
 
 `deno lint` hands a rule one parsed file and nothing else — no types, no
 cross-file resolution, no configuration. This package supplies the rest: a
@@ -44,8 +44,7 @@ const noFloatingPromises = createRule({
 export default definePlugin({ name: "demo", rules: [noFloatingPromises] });
 ```
 
-Users add the plugin to `deno.json` and nothing else. They never write a wrapper
-file.
+Users add the plugin to `deno.json` and nothing else.
 
 ```jsonc
 {
