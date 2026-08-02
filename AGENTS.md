@@ -34,7 +34,9 @@ declared below it. Reordering that block is a real change, not formatting. Every
 module reached from another must have a `#` entry, which is why the two public
 barrels have `#mod` and `#types` even though nothing internal imports them.
 
-- `#mod` / `#types` — the two published entry points.
+- `#mod` / `#types` / `#testing` — the three published entry points. `#testing`
+  reaches `#store` directly rather than `#project`, so installing a test program
+  does not first build the real one.
 - `#program` — `createDenoProgram`, a `@deno/loader` host (import maps,
   workspaces, `npm:`/`jsr:`/`https:`, no `node_modules` needed) feeding
   `ts.createProgram`. Ported from `deno-lint-plugin-lit`'s scanner; keep them in

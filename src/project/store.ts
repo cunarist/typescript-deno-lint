@@ -22,6 +22,15 @@ export interface Project {
   readonly program: ts.Program;
   /** Rebuilds with one file's text replaced, or null when it cannot. */
   readonly rebuild: (path: string, text: string) => ts.Program | null;
+  /**
+   * Whether the program's copy of a file stands in for whatever is linted.
+   *
+   * Only a test sets this. A rule test lints a snippet with no imports, so the
+   * program behind it is assembled to make those symbols resolve — its text is
+   * deliberately not the text being linted, and comparing them would reject
+   * every snippet.
+   */
+  readonly trustStaleText?: boolean;
 }
 
 let project: Project | null = null;
@@ -65,7 +74,7 @@ export function currentSourceFile(
     return null;
   }
   const built = project.program.getSourceFile(filename);
-  if (built !== undefined && built.text === text) {
+  if (built !== undefined && (project.trustStaleText || built.text === text)) {
     return built;
   }
   const previous = rebuilt.get(filename);

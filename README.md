@@ -7,6 +7,9 @@ cross-file resolution, no configuration. This package supplies the rest: a
 TypeScript program resolved the way Deno resolves modules, a map from lint nodes
 onto it, named messages, and per-rule options read from `deno.json`.
 
+The API stays as close to `typescript-eslint` as Deno's plugin API allows. A rule
+ported from there mostly keeps its shape.
+
 ```ts
 import { createRule, definePlugin } from "jsr:@cunarist/typescript-deno-lint";
 import { tryGetTypeServices } from "jsr:@cunarist/typescript-deno-lint/types";
@@ -55,16 +58,38 @@ Users add the plugin to `deno.json` and nothing else.
 }
 ```
 
-## Two entry points
+## Entry points
 
-| Entry     | What it gives                                      | Cost                    |
-| --------- | -------------------------------------------------- | ----------------------- |
-| `.`       | `createRule`, `definePlugin`, `ruleCreator`        | none                    |
-| `./types` | `getTypeServices`, `tryGetTypeServices`, `nodeMap` | builds the program once |
+| Entry       | What it gives                                      | Cost                    |
+| ----------- | -------------------------------------------------- | ----------------------- |
+| `.`         | `createRule`, `definePlugin`, `ruleCreator`        | none                    |
+| `./types`   | `getTypeServices`, `tryGetTypeServices`, `nodeMap` | builds the program once |
+| `./testing` | `useTestProgram`, `clearTestProgram`               | none                    |
 
 Importing `./types` builds the project's TypeScript program at plugin load,
 roughly a quarter second for a mid-sized project. A plugin with no type-aware
 rule should never import it.
+
+## Testing a type-aware rule
+
+`Deno.lint.runPlugin` lints a snippet that belongs to no project, so nothing the
+plugin built at load contains it and every type-aware rule goes silent. Build a
+program for the snippet and install it. Appending the imports the snippet omits
+leaves its own offsets untouched, so reported ranges stay right.
+
+```ts
+import {
+  clearTestProgram,
+  useTestProgram,
+} from "jsr:@cunarist/typescript-deno-lint/testing";
+
+useTestProgram(programOver(`${snippet}${theImportsItOmits}`));
+try {
+  Deno.lint.runPlugin(plugin, "snippet.ts", snippet);
+} finally {
+  clearTestProgram();
+}
+```
 
 ## Type services
 

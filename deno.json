@@ -4,13 +4,16 @@
   "license": "MIT",
   "exports": {
     ".": "./src/mod.ts",
-    "./types": "./src/types.ts"
+    "./types": "./src/types.ts",
+    "./testing": "./src/testing.ts"
   },
   "imports": {
     "#mod": "./src/mod.ts",
     "#types": "./src/types.ts",
+    "#testing": "./src/testing.ts",
     "#services": "./src/services/mod.ts",
     "#project": "./src/project/mod.ts",
+    "#store": "./src/project/store.ts",
     "#program": "./src/program/mod.ts",
     "#rule": "./src/rule/mod.ts",
     "#options": "./src/options/mod.ts",
