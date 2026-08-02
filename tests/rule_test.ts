@@ -1,7 +1,7 @@
 import { assertEquals } from "@std/assert";
 
-import { createRule, definePlugin, ruleCreator } from "../src/mod.ts";
-import { setConfiguredOptions } from "../src/options/mod.ts";
+import { createRule, definePlugin, ruleCreator } from "#mod";
+import { setConfiguredOptions } from "#options";
 
 /** Runs a one-rule plugin over a snippet and returns what it reported. */
 function messages(

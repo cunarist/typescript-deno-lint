@@ -1,5 +1,5 @@
-import { dirname, join, resolve } from "@std/path";
 import { parse as parseJsonc } from "@std/jsonc";
+import { dirname, join, resolve } from "@std/path";
 
 /**
  * Per-rule options, read out of the project's Deno configuration file.

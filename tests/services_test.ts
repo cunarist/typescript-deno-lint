@@ -1,8 +1,8 @@
 import { assertEquals, assertNotEquals } from "@std/assert";
 import { fromFileUrl } from "@std/path";
 
-import { createRule, definePlugin } from "../src/mod.ts";
-import { tryGetTypeServices } from "../src/types.ts";
+import { createRule, definePlugin } from "#mod";
+import { tryGetTypeServices } from "#types";
 
 const FIXTURE = fromFileUrl(import.meta.resolve("./fixtures/typed.ts"));
 const SOURCE = Deno.readTextFileSync(FIXTURE);

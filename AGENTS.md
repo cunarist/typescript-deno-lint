@@ -28,6 +28,13 @@ quarter second on every consumer.
 
 ### Layers
 
+`deno-import-check` enforces these as layers: **the order they are declared in
+`deno.json` `imports` is the layer order**, and a module may only import ones
+declared below it. Reordering that block is a real change, not formatting. Every
+module reached from another must have a `#` entry, which is why the two public
+barrels have `#mod` and `#types` even though nothing internal imports them.
+
+- `#mod` / `#types` — the two published entry points.
 - `#program` — `createDenoProgram`, a `@deno/loader` host (import maps,
   workspaces, `npm:`/`jsr:`/`https:`, no `node_modules` needed) feeding
   `ts.createProgram`. Ported from `deno-lint-plugin-lit`'s scanner; keep them in

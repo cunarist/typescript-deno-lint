@@ -7,11 +7,13 @@
     "./types": "./src/types.ts"
   },
   "imports": {
-    "#options": "./src/options/mod.ts",
-    "#program": "./src/program/mod.ts",
-    "#project": "./src/project/mod.ts",
-    "#rule": "./src/rule/mod.ts",
+    "#mod": "./src/mod.ts",
+    "#types": "./src/types.ts",
     "#services": "./src/services/mod.ts",
+    "#project": "./src/project/mod.ts",
+    "#program": "./src/program/mod.ts",
+    "#rule": "./src/rule/mod.ts",
+    "#options": "./src/options/mod.ts",
     "@deno/loader": "jsr:@deno/loader@^0.5.0",
     "@std/assert": "jsr:@std/assert@^1.0.0",
     "@std/fs": "jsr:@std/fs@^1.0.0",
@@ -35,6 +37,7 @@
     "verbatimModuleSyntax": true
   },
   "lint": {
+    "plugins": ["jsr:@cunarist/deno-import-check@0.7.0/lint"],
     "rules": {
       "tags": ["recommended", "jsr"],
       "include": [
