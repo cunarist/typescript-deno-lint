@@ -7,8 +7,8 @@ cross-file resolution, no configuration. This package supplies the rest: a
 TypeScript program resolved the way Deno resolves modules, a map from lint nodes
 onto it, named messages, and per-rule options read from `deno.json`.
 
-The API stays as close to `typescript-eslint` as Deno's plugin API allows. A rule
-ported from there mostly keeps its shape.
+The API stays as close to `typescript-eslint` as Deno's plugin API allows. A
+rule ported from there mostly keeps its shape.
 
 ```ts
 import { createRule, definePlugin } from "jsr:@cunarist/typescript-deno-lint";
@@ -60,11 +60,12 @@ Users add the plugin to `deno.json` and nothing else.
 
 ## Entry points
 
-| Entry       | What it gives                                      | Cost                    |
-| ----------- | -------------------------------------------------- | ----------------------- |
-| `.`         | `createRule`, `definePlugin`, `ruleCreator`        | none                    |
-| `./types`   | `getTypeServices`, `tryGetTypeServices`, `nodeMap` | builds the program once |
-| `./testing` | `useTestProgram`, `clearTestProgram`               | none                    |
+| Entry       | What it gives                                       | Cost                    |
+| ----------- | --------------------------------------------------- | ----------------------- |
+| `.`         | `createRule`, `definePlugin`, `ruleCreator`         | none                    |
+| `./types`   | `getTypeServices`, `tryGetTypeServices`, `nodeMap`  | builds the program once |
+| `./testing` | `useTestProgram`, `clearTestProgram`                | none                    |
+| `./program` | `createDenoProgram` — build one yourself, for tests | none                    |
 
 Importing `./types` builds the project's TypeScript program at plugin load,
 roughly a quarter second for a mid-sized project. A plugin with no type-aware
