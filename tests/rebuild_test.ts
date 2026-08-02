@@ -49,9 +49,9 @@ Deno.test("rebuild: follows an offset shifted by an edit", async () => {
     // at the new offset must reach the same declaration.
     const prefix = "// a comment added since the build\n";
     const program = built.rebuild(file, `${prefix}${SOURCE}`);
-    assertNotEquals(program, null);
+    if (program === null) throw new Error("the rebuild was refused");
     assertEquals(
-      classNameOffset(program!, file),
+      classNameOffset(program, file),
       (before ?? 0) + prefix.length,
     );
   } finally {
@@ -66,13 +66,10 @@ Deno.test("rebuild: reuses every file the edit did not touch", async () => {
     const lib = built.program.getSourceFiles()
       .find((source) => source.fileName.includes("lib."));
     const program = built.rebuild(file, `// edited\n${SOURCE}`);
-    assertNotEquals(program, null);
+    if (program === null) throw new Error("the rebuild was refused");
     // The same object, not an equal one: that identity is what lets TypeScript
     // skip reparsing, and is the whole reason a rebuild is cheap.
-    assertEquals(
-      program!.getSourceFile(lib?.fileName ?? "") === lib,
-      true,
-    );
+    assertEquals(program.getSourceFile(lib?.fileName ?? "") === lib, true);
   } finally {
     await Deno.remove(root, { recursive: true });
   }
