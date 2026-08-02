@@ -1,0 +1,57 @@
+{
+  "name": "@cunarist/typescript-deno-lint",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/mod.ts",
+    "./types": "./src/types.ts"
+  },
+  "imports": {
+    "#options": "./src/options/mod.ts",
+    "#program": "./src/program/mod.ts",
+    "#project": "./src/project/mod.ts",
+    "#rule": "./src/rule/mod.ts",
+    "#services": "./src/services/mod.ts",
+    "@deno/loader": "jsr:@deno/loader@^0.5.0",
+    "@std/assert": "jsr:@std/assert@^1.0.0",
+    "@std/fs": "jsr:@std/fs@^1.0.0",
+    "@std/jsonc": "jsr:@std/jsonc@^1.0.0",
+    "@std/path": "jsr:@std/path@^1.0.0",
+    "typescript": "npm:typescript@^5.7.0"
+  },
+  "tasks": {
+    "check": "deno fmt --check && deno lint && deno check && deno test -A",
+    "fix": "deno fmt && deno lint --fix"
+  },
+  "compilerOptions": {
+    "lib": ["esnext", "deno.ns", "deno.unstable", "dom", "dom.iterable"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+    "verbatimModuleSyntax": true
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended", "jsr"],
+      "include": [
+        "camelcase",
+        "eqeqeq",
+        "guard-for-in",
+        "no-console",
+        "no-const-assign",
+        "no-eval",
+        "no-non-null-asserted-optional-chain",
+        "no-non-null-assertion",
+        "no-throw-literal",
+        "verbatim-module-syntax"
+      ]
+    }
+  },
+  "publish": {
+    "exclude": ["tests/", ".agents/", "AGENTS.md", "CLAUDE.md"]
+  }
+}
