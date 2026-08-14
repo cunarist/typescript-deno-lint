@@ -60,7 +60,13 @@ export async function createDenoProgram(
 ): Promise<DenoProgram> {
   // The loader and its native resources are held for the isolate's life rather
   // than released here, because a rebuild resolves through the same loader.
-  const workspace = new Workspace({ configPath: resolvePath(configPath) });
+  // The browser platform matches the DOM libs the program runs under, so a
+  // package with split builds resolves to the declarations of its browser
+  // variant rather than its Node one.
+  const workspace = new Workspace({
+    configPath: resolvePath(configPath),
+    platform: "browser",
+  });
   const loader = await workspace.createLoader();
   // Entrypoints let the loader build its npm and jsr graph up front, so the
   // per-import `resolveSync` the host calls needs no further await.
